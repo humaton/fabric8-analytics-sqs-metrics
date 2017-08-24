@@ -17,4 +17,4 @@ ENV LANG=en_US.UTF-8
 
 ENV FLASK_APP=app.py
 
-RUN flask run
+#RUN flask run
