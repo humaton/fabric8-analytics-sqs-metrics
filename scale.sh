@@ -1,17 +1,32 @@
 #!/usr/bin/bash -e
+POD_TO_SCALE="sqs-metrics"
+DEFAULT_NUMBER_OF_PODS=5
+SQS_QUEUE_FOR_SCALING="DEV_livenessFlow_v0"
+
+function scale_to_default { 
+    oc scale --replicas=$DEFAULT_NUMBER_OF_PODS dc $POD_TO_SCALE
+}
 
 set -x
 oc whoami
 oc project
 set +x
 
-function scale_up { 
-    oc scale -n $PROJECT --replicas=2 rc $POD_TO_SCALE
-    }
+#get number of messages in queue prod_ingestion_bayesianPackageFlow_v0 DEV_livenessFlow_v0
+NUMBER_OF_MESSAGES=$(./sqs_status.py -q $SQS_QUEUE_FOR_SCALING)
 
-function scale_down { 
-    echo $1 
-    }
-function scale_to_default { 
-    echo $1 
-    }
+echo "Number of messages in queue: $NUMBER_OF_MESSAGES"
+
+#run scale based on number of messages
+if (( NUMBER_OF_MESSAGES > 10000 )); then
+    oc scale --replicas=10 dc $POD_TO_SCALE
+
+elif (( NUMBER_OF_MESSAGES < 5000 )); then
+    scale_to_default
+
+elif (( NUMBER_OF_MESSAGES < 1000 )); then
+    oc scale --replicas=3 dc $POD_TO_SCALE
+
+elif (( NUMBER_OF_MESSAGES < 500 )); then
+    oc scale --replicas=2 dc $POD_TO_SCALE
+fi
