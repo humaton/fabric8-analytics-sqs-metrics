@@ -1,7 +1,12 @@
 #!/usr/bin/bash -e
+
 POD_TO_SCALE="sqs-metrics"
-DEFAULT_NUMBER_OF_PODS=5
 SQS_QUEUE_FOR_SCALING="DEV_livenessFlow_v0"
+
+DEFAULT_NUMBER_OF_PODS=5
+MAXIMUM_NUMBER_OF_PODS=10
+
+
 
 function scale_to_default { 
     oc scale --replicas=$DEFAULT_NUMBER_OF_PODS dc $POD_TO_SCALE
