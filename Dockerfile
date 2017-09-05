@@ -7,11 +7,11 @@ RUN yum --setopt=tsflags=nodocs install -y epel-release && \
 
 RUN pip3 install --upgrade pip && pip install --upgrade wheel && \
     pip3 install boto3 
-RUN mkdir -p /home/sqs-stats
+RUN mkdir -p /home/scaler
 
-COPY scale.sh /home/sqs-stats
-COPY sqs_status.py /home/sqs-stats
+COPY scale.sh /home/scaler
+COPY sqs_status.py /home/scaler
 
-WORKDIR /home/sqs-stats
+WORKDIR /home/scaler
 
 ENV LANG=en_US.UTF-8
