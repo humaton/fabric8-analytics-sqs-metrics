@@ -69,6 +69,14 @@ objects:
               configMapKeyRef:
                 name: bayesian-config
                 key: s3-bucket-for-analyses
+          - name: WORKER_POD_TO_SCALE
+            value: "${WORKER_POD_TO_SCALE}"
+          - name: SQS_QUEUE_FOR_SCALING
+            value: "${SQS_QUEUE_FOR_SCALING}"
+          - name: DEFAULT_NUMBER_OF_PODS
+            value: "${DEFAULT_NUMBER_OF_PODS}"
+          - name: MAX_NUMBER_OF_PODS
+            value: "${MAX_NUMBER_OF_PODS}"
           image: "${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${IMAGE_TAG}"
           name: bayesian-worker-scaler
           readinessProbe:

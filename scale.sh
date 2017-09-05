@@ -1,15 +1,15 @@
 #!/usr/bin/bash -e
 
-POD_TO_SCALE="sqs-metrics"
+WORKER_POD_TO_SCALE="sqs-metrics"
 SQS_QUEUE_FOR_SCALING="DEV_livenessFlow_v0"
 
 DEFAULT_NUMBER_OF_PODS=5
-SCALE_TO_NUMBER_OF_PODS=10
+MAX_NUMBER_OF_PODS=10
 
 
 
 function scale_to_default { 
-    oc scale --replicas=$DEFAULT_NUMBER_OF_PODS dc $POD_TO_SCALE
+    oc scale --replicas=$DEFAULT_NUMBER_OF_PODS dc $WORKER_POD_TO_SCALE
 }
 
 set -x
@@ -24,14 +24,14 @@ echo "Number of messages in queue: $NUMBER_OF_MESSAGES"
 
 #run scale based on number of messages
 if (( NUMBER_OF_MESSAGES > 10000 )); then
-    oc scale --replicas=$SCALE_TO_NUMBER_OF_PODS dc $POD_TO_SCALE
+    oc scale --replicas=$MAX_NUMBER_OF_PODS dc $WORKER_POD_TO_SCALE
 
 elif (( NUMBER_OF_MESSAGES < 5000 )); then
     scale_to_default
 
 elif (( NUMBER_OF_MESSAGES < 1000 )); then
-    oc scale --replicas=3 dc $POD_TO_SCALE
+    oc scale --replicas=3 dc $WORKER_POD_TO_SCALE
 
 elif (( NUMBER_OF_MESSAGES < 500 )); then
-    oc scale --replicas=2 dc $POD_TO_SCALE
+    oc scale --replicas=2 dc $WORKER_POD_TO_SCALE
 fi
