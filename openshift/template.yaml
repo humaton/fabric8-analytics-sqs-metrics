@@ -116,7 +116,7 @@ parameters:
   displayName: Docker image
   required: true
   name: DOCKER_IMAGE
-  value: "bayesian/worker-scaler"
+  value: "bayesian/sqs-stats"
 
 - description: Image tag
   displayName: Image tag
