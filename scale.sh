@@ -1,10 +1,11 @@
 #!/usr/bin/bash -e
 
-WORKER_POD_TO_SCALE="sqs-metrics"
-SQS_QUEUE_FOR_SCALING="DEV_livenessFlow_v0"
+#This values are supplied by env variables in openshift
+#WORKER_POD_TO_SCALE="sqs-metrics"
+#SQS_QUEUE_FOR_SCALING="DEV_livenessFlow_v0"
 
-DEFAULT_NUMBER_OF_PODS=5
-MAX_NUMBER_OF_PODS=10
+#DEFAULT_NUMBER_OF_PODS=5
+#MAX_NUMBER_OF_PODS=10
 
 
 
