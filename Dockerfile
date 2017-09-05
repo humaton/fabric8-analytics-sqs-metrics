@@ -13,19 +13,17 @@ RUN mkdir -p /home/scaler
 
 COPY scale.sh /home/scaler
 COPY sqs_status.py /home/scaler
+
 ADD scalerjob /etc/cron.d/scalerjob
 
 WORKDIR /home/scaler
 
-RUN chmod +x /home/scaler/scale.sh
-RUN chmod +x /home/scaler/sqs_status.py
 RUN chmod 0644 /etc/cron.d/scalerjob
 
 #Workaround centos crond problem
 RUN sed -i '/session required pam_loginuid.so/d' /etc/pam.d/crond
+
 RUN touch /var/log/cron.log
 
 
 CMD crond && tail -f /var/log/cron.log
-
-
