@@ -6,7 +6,7 @@ oc project
 set +x
 
 WORKER_POD_TO_SCALE="bayesian-worker-ingestion"
-SQS_QUEUE_FOR_SCALING="DEV_livenessFlow_v0"
+SQS_QUEUE_FOR_SCALING="stage_ingestion_bayesianAnalysisFlow_v0"
 
 DEFAULT_NUMBER_OF_PODS=5
 MAX_NUMBER_OF_PODS=10
