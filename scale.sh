@@ -1,14 +1,5 @@
 #!/usr/bin/bash -e
 
-#This values are supplied by env variables in openshift
-#WORKER_POD_TO_SCALE="sqs-metrics"
-#SQS_QUEUE_FOR_SCALING="DEV_livenessFlow_v0"
-
-#DEFAULT_NUMBER_OF_PODS=5
-#MAX_NUMBER_OF_PODS=10
-
-
-
 function scale_to_default { 
     oc scale --replicas=$DEFAULT_NUMBER_OF_PODS dc $WORKER_POD_TO_SCALE
 }

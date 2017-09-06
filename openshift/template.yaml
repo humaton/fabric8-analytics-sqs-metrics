@@ -11,17 +11,17 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
-      service: bayesian-worker-scaler-${WORKER_ADMINISTRATION_REGION}
-    name: bayesian-worker-scaler-${WORKER_ADMINISTRATION_REGION}
+      service: bayesian-worker-scaler-${WORKER_POD_TO_SCALE}
+    name: bayesian-worker-scaler-${WORKER_POD_TO_SCALE}
   spec:
     selector:
-      service: bayesian-worker-scaler-${WORKER_ADMINISTRATION_REGION}
+      service: bayesian-worker-scaler-${WORKER_POD_TO_SCALE}
     strategy:
       type: Rolling
     template:
       metadata:
         labels:
-          service: bayesian-worker-scaler-${WORKER_ADMINISTRATION_REGION}
+          service: bayesian-worker-scaler-${WORKER_POD_TO_SCALE}
       spec:
         containers:
         - env:
@@ -32,8 +32,6 @@ objects:
               configMapKeyRef:
                 name: bayesian-config
                 key: deployment-prefix
-          - name: WORKER_ADMINISTRATION_REGION
-            value: "${WORKER_ADMINISTRATION_REGION}"
           - name: AWS_SQS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
@@ -105,7 +103,7 @@ parameters:
 - description: Worker region for serving tasks - api or ingestion
   displayName: Worker administration region
   required: true
-  name: WORKER_ADMINISTRATION_REGION
+  name: WORKER_POD_TO_SCALE
   value: "api"
 
 - description: Turn off tasks that are run on OpenShift instance and require internal services
