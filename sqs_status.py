@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys, getopt, os
 import boto3
@@ -16,17 +16,17 @@ def main(argv):
    try:
       opts, args = getopt.getopt(argv,"hq:",["queue="])
    except getopt.GetoptError:
-      print 'test.py -q <queue_name>'
+      print('test.py -q <queue_name>')
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print 'test.py -q <queue_name>'
+         print('test.py -q <queue_name>')
          sys.exit()
       elif opt in ("-q", "--queue"):
          sqs_queue_name = arg
          queue = sqs.get_queue_by_name(QueueName=sqs_queue_name)
          result = queue.attributes.get('ApproximateNumberOfMessages')
-         print result
+         print(result)
 
 if __name__ == "__main__":
    main(sys.argv[1:])
