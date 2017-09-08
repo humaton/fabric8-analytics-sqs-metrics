@@ -8,7 +8,11 @@ RUN yum --setopt=tsflags=nodocs install -y epel-release && \
     yum clean all
 
 RUN pip3 install --upgrade pip && pip install --upgrade wheel && \
-    pip3 install boto3 
+    pip3 install boto3
+
+COPY install_oc.sh /tmp/
+RUN /tmp/install_oc.sh
+
 RUN mkdir -p /home/scaler
 
 COPY scale.sh /home/scaler
